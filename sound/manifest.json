@@ -1,0 +1,11 @@
+{
+    "name": "Sound",
+    "id": 20000,
+    "commands": [
+        {
+            "theme": "Sound",
+            "syntax": "process sound file(&T;&L):T",
+            "threadSafe": true
+        }
+    ]
+}

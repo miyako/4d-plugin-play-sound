@@ -1,0 +1,34 @@
+{
+	"themes": [
+		{
+			"theme": "Sound File Action",
+			"constants": [
+				{
+					"name": "sound action open",
+					"value": "0:L"
+				},
+        {
+					"name": "sound action pause",
+					"value": "1:L"
+				},
+        {
+					"name": "sound action play",
+					"value": "2:L"
+				},
+        {
+					"name": "sound action stop",
+					"value": "3:L"
+				},
+        {
+					"name": "sound action close",
+					"value": "4:L"
+				}
+        ,
+        {
+					"name": "sound action resume",
+					"value": "5:L"
+				}
+			]
+		}
+	]
+}
