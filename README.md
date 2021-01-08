@@ -7,6 +7,6 @@
 
 To use on v16 or v17, move manifest.json to contents.
 
-On Windows, the [`WinMM`](https://docs.microsoft.com/en-us/previous-versions/dd743680(v=vs.85)) is called via [`mciSendString`](https://docs.microsoft.com/en-us/previous-versions/dd757161(v=vs.85)). It's a legacy API.
+On Windows, [`WinMM`](https://docs.microsoft.com/en-us/previous-versions/dd743680(v=vs.85)) is called via [`mciSendString`](https://docs.microsoft.com/en-us/previous-versions/dd757161(v=vs.85)). It's a legacy API.
 
 On Mac, [`NSSound`](https://developer.apple.com/documentation/appkit/nssound?language=objc) is called.
