@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <xliff version="1.0" xmlns:d4="http://www.4d.com/d4-ns">
     <header>
         <note>Sound</note>
@@ -26,6 +26,12 @@
         </trans-unit>
         <trans-unit d4:value="5:L" id="20A5288C06C941B8909D08B23E73BD56.6">
             <source>sound action resume</source>
+        </trans-unit>
+        <trans-unit d4:value="6:L" id="20A5288C06C941B8909D08B23E73BD56.7">
+            <source>sound duration</source>
+        </trans-unit>
+        <trans-unit d4:value="7:L" id="20A5288C06C941B8909D08B23E73BD56.8">
+            <source>sound is playing</source>
         </trans-unit>
     </group>
 </xliff>

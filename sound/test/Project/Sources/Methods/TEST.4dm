@@ -9,6 +9,16 @@ $info:=process sound file ($file;sound action pause)
 
 $info:=process sound file ($file;sound action resume)
 
+If (Is macOS:C1572)
+	
+	
+	Repeat 
+		
+	Until (process sound file ($file;sound playing))
+	
+	
+End if 
+
 $info:=process sound file ($file;sound action stop)
 
 $info:=process sound file ($file;sound action close)
