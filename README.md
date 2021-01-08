@@ -7,7 +7,7 @@
 
 To use on v16 or v17, move manifest.json to contents.
 
-On Windows, [`WinMM`](https://docs.microsoft.com/en-us/previous-versions/dd743680(v=vs.85)) is called via [`mciSendString`](https://docs.microsoft.com/en-us/previous-versions/dd757161(v=vs.85)). It's a legacy API.
+On Windows, legacy [`WinMM`](https://docs.microsoft.com/en-us/previous-versions/dd743680(v=vs.85)) is called via [`mciSendString`](https://docs.microsoft.com/en-us/previous-versions/dd757161(v=vs.85)). On Mac, [`NSSound`](https://developer.apple.com/documentation/appkit/nssound?language=objc) is called.
 
 Supported actions on Windows:
 
@@ -17,8 +17,6 @@ Supported actions on Windows:
 * [stop](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/stop)
 * [close](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/close)
 * [resume](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/resume)
-
-On Mac, [`NSSound`](https://developer.apple.com/documentation/appkit/nssound?language=objc) is called.
 
 Extra supported electors on Mac:
 
