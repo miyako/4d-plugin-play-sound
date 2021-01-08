@@ -22,3 +22,7 @@ Extra selectors supported on Mac:
 
 * [duration](https://developer.apple.com/documentation/appkit/nssound/1477313-duration?language=objc)
 * [playing](https://developer.apple.com/documentation/appkit/nssound/1477302-playing?language=objc)
+
+---
+
+For recording and playback, consider [4d-plugin-sfml-audio](https://github.com/miyako/4d-plugin-sfml-audio).
