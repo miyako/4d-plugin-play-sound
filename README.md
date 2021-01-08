@@ -18,7 +18,7 @@ Supported actions on Windows:
 * [close](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/close)
 * [resume](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/resume)
 
-Extra supported electors on Mac:
+Extra selectors supported on Mac:
 
 * [duration](https://developer.apple.com/documentation/appkit/nssound/1477313-duration?language=objc)
 * [playing](https://developer.apple.com/documentation/appkit/nssound/1477302-playing?language=objc)
