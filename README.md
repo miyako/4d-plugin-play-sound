@@ -19,3 +19,8 @@ Supported actions on Windows:
 * [resume](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/resume)
 
 On Mac, [`NSSound`](https://developer.apple.com/documentation/appkit/nssound?language=objc) is called.
+
+Extra supported electors on Mac:
+
+* [duration](https://developer.apple.com/documentation/appkit/nssound/1477313-duration?language=objc)
+* [playing](https://developer.apple.com/documentation/appkit/nssound/1477302-playing?language=objc)
