@@ -11,11 +11,11 @@ On Windows, [`WinMM`](https://docs.microsoft.com/en-us/previous-versions/dd74368
 
 Supported actions on Windows:
 
-* open
-* pause
-* play
-* stop
-* close
-* resume
+* [open](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/open)
+* [pause](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/pause)
+* [play](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/play)
+* [stop](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/stop)
+* [close](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/close)
+* [resume](https://docs.microsoft.com/ja-jp/windows/win32/multimedia/resume)
 
 On Mac, [`NSSound`](https://developer.apple.com/documentation/appkit/nssound?language=objc) is called.
