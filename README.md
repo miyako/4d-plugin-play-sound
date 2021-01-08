@@ -1,23 +1,6 @@
-4d-plugin-play-sound
-====================
+![version](https://img.shields.io/badge/version-16%2B-8331AE)
+![platform](https://img.shields.io/static/v1?label=platform&message=osx-64%20|%20win-32%20|%20win-64&color=blue)
 
-Play sound on OS X and Windows.
+![downloads](https://img.shields.io/github/downloads/miyako/4d-plugin-play-sound/total)
 
-##Platform
-
-| carbon | cocoa | win32 | win64 |
-|:------:|:-----:|:---------:|:---------:|
-|🆗|🚫|🆗|🆗|
-
-Commands
----
-
-```c
-// --- Play Sound
-SOUND_Open
-SOUND_Pause
-SOUND_Play
-SOUND_Stop
-SOUND_Close
-SOUND_Resume
-```
+# 4d-plugin-play-sound
