@@ -34,12 +34,18 @@ void PluginMain(PA_long32 selector, PA_PluginParameters params) {
 #if VERSIONMAC
         case kInitPlugin :
         case kServerInitPlugin :
-            sound::aliases = [[NSMutableDictionary alloc]init];
+            if(!sound::aliases){
+                sound::aliases = [[NSMutableDictionary alloc]init];
+            }
             break;
             
         case kDeinitPlugin :
         case kServerDeinitPlugin :
-            [sound::aliases release];
+            {
+                std::lock_guard<std::mutex> lock(sound::mutex);
+                [sound::aliases release];
+                sound::aliases = nil;
+            }
             break;
 #endif
 			// --- Sound
@@ -88,16 +94,19 @@ static const wchar_t *getCommandStringForAction(sound_action_t action) {
 #endif
 
 #if VERSIONMAC
-static void removeAliasKey(NSString *alias){
-    
-    std::lock_guard<std::mutex> lock(sound::mutex);
+// removes an alias and stops its sound; caller must hold sound::mutex
+static void removeAliasKeyLocked(NSString *alias){
     
     NSSound *sound = [sound::aliases valueForKey:alias];
     if(sound){
         [sound stop];
-        [sound release];
         [sound::aliases removeObjectForKey:alias];
     }
+}
+static void removeAliasKey(NSString *alias){
+    
+    std::lock_guard<std::mutex> lock(sound::mutex);
+    removeAliasKeyLocked(alias);
 }
 static NSString *selectorForAction(sound_action_t action) {
     switch (action) {
@@ -121,6 +130,7 @@ static NSString *selectorForAction(sound_action_t action) {
 static void performSelectorForAction(C_TEXT& Param1, sound_action_t action){
     
     NSString *alias = Param1.copyUTF16String();
+    std::lock_guard<std::mutex> lock(sound::mutex);
     NSSound *sound = [sound::aliases valueForKey:alias];
     if(sound){
         [sound performSelector:NSSelectorFromString(selectorForAction(action))];
@@ -149,62 +159,79 @@ void process_sound_file(PA_PluginParameters params) {
     Param1.fromParamAtIndex(pParams, 1);
     
     sound_action_t action = (sound_action_t)PA_GetLongParameter(params, 2);
-    
+
+    try
+    {
 #if VERSIONWIN
     wchar_t commandString[_MAX_PATH + 128] = {0};
     wchar_t *alias = (wchar_t *)Param1.getUTF16StringPtr();
     _stprintf_s(commandString, getCommandStringForAction(action), alias, alias);
     sendCommand(commandString, returnValue);
 #else
-    switch (action) {
-        case sound_action_open:
-        {
-            NSURL *url = Param1.copyUrl();
-            if(url){
-                NSString *alias = Param1.copyUTF16String();
-                removeAliasKey(alias);
-                NSSound* sound = [[NSSound alloc]initWithContentsOfURL:url byReference:YES];
-                [sound::aliases setValue:sound forKey:alias];
-                [url release];
-                [alias release];
+    @autoreleasepool {
+        switch (action) {
+            case sound_action_open:
+            {
+                NSURL *url = Param1.copyUrl();
+                if(url){
+                    NSString *alias = Param1.copyUTF16String();
+                    {
+                        std::lock_guard<std::mutex> lock(sound::mutex);
+                        removeAliasKeyLocked(alias);
+                        NSSound *sound = [[NSSound alloc]initWithContentsOfURL:url byReference:YES];
+                        if(sound){
+                            [sound::aliases setValue:sound forKey:alias];
+                            [sound release];
+                        }
+                    }
+                    [url release];
+                    [alias release];
+                }
             }
-        }
-            break;
-        case sound_action_pause:
-        case sound_action_play:
-        case sound_action_stop:
-        case sound_action_resume:
-            performSelectorForAction(Param1, action);
-            break;
-        case sound_action_close:
-        {
-            NSString *alias = Param1.copyUTF16String();
-            removeAliasKey(alias);
-            [alias release];
-        }
-             break;
-        case sound_duration:
+                break;
+            case sound_action_pause:
+            case sound_action_play:
+            case sound_action_stop:
+            case sound_action_resume:
+                performSelectorForAction(Param1, action);
+                break;
+            case sound_action_close:
             {
                 NSString *alias = Param1.copyUTF16String();
+                removeAliasKey(alias);
+                [alias release];
+            }
+                break;
+            case sound_duration:
+            {
+                NSString *alias = Param1.copyUTF16String();
+                std::lock_guard<std::mutex> lock(sound::mutex);
                 NSSound *sound = [sound::aliases valueForKey:alias];
                 if(sound){
                     returnValue.setUTF16String([[NSNumber numberWithDouble:[sound duration]]stringValue]);
                 }
                 [alias release];
             }
-            break;
-        case sound_is_playing:
-        {
-            NSString *alias = Param1.copyUTF16String();
-            NSSound *sound = [sound::aliases valueForKey:alias];
-            if(sound){
-                returnValue.setUTF16String([sound isPlaying] ? @"YES" : @"NO");
+                break;
+            case sound_is_playing:
+            {
+                NSString *alias = Param1.copyUTF16String();
+                std::lock_guard<std::mutex> lock(sound::mutex);
+                NSSound *sound = [sound::aliases valueForKey:alias];
+                if(sound){
+                    returnValue.setUTF16String([sound isPlaying] ? @"YES" : @"NO");
+                }
+                [alias release];
             }
-            [alias release];
+                break;
         }
-            break;
     }
 #endif
+    
+    }
+    catch(...)
+    {
+    }
     
     sLONG_PTR *pResult = (sLONG_PTR *)params->fResult;
     returnValue.setReturn(pResult);
