@@ -1,2 +1,8 @@
-sound/build/Sound.build*
-*.DS_Store
+.DS_Store
+build/
+test/Data/
+test/Logs/
+test/userPreferences.*
+test/Project/DerivedData/
+test/Plugins/Sound.bundle/Contents/MacOS/
+test/Plugins/Sound.bundle/Contents/_CodeSignature/
