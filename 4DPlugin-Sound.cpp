@@ -15,6 +15,7 @@
 #if VERSIONWIN
 #pragma comment(lib, "winmm.lib")
 #include <tchar.h> //for _stprintf_s
+#include <mmsystem.h> //for MCI (mciSendString / mciGetErrorString / MCIERROR)
 #else
 #include <mutex>
 #import <Cocoa/Cocoa.h>
